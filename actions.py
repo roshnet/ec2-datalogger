@@ -1,11 +1,18 @@
 import json
+import logging
 
 from models import Reading
+
+logger = logging.getLogger(__name__)
 
 
 def on_message(client, userdata, message):
     """Callback when message is received on any topic."""
-    insert_payload(json.loads(message.payload.decode("utf-8")))
+    try:
+        insert_payload(json.loads(message.payload.decode("utf-8")))
+    except Exception as e:
+        logger.warning("Payload structure has possibly changed.")
+        logger.error(str(e))
 
 
 def insert_payload(payload):
