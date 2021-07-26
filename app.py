@@ -11,6 +11,7 @@ load_dotenv()
 BROKER_IP = os.environ.get("BROKER_IP")
 BROKER_USERNAME = os.environ.get("BROKER_USERNAME")
 BROKER_PASSWORD = os.environ.get("BROKER_PASSWORD")
+CLIENT_ID = os.environ.get("CLIENT_ID", "localhost")
 
 LOG_FORMAT = "[%(levelname)s %(asctime)s] : %(message)s"
 logging.basicConfig(filename="event.log", level=logging.INFO, format=LOG_FORMAT)
@@ -19,7 +20,7 @@ logger = logging.getLogger(__name__)
 logger.info("Daemon has started.")
 
 # Configure & establish connection to the broker
-mqtt_client = Client("Default Sensor")
+mqtt_client = Client(CLIENT_ID)
 mqtt_client.username_pw_set(BROKER_USERNAME, BROKER_PASSWORD)
 
 
